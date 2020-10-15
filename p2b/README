@@ -1,0 +1,53 @@
+NAME: Max Zhang
+EMAIL: pipi-max@hotmail.com
+ID: 205171726
+
+Submissions:
+lab2b_list.gp is the written script that generates graphs;
+
+Research:
+TA PPT and TA provided gprof man page
+
+Testing methodology:
+- All the test cases required by the graphs
+- Sanity check script
+
+Answers:
+Q2.3.1
+For 1 and 2 thread list test, most cycles are spent actually doing the work of insertion, look up, and deletion.
+This is the most expensive part of the code because with such few number of threads,
+there's not much overhead with creation of threads, with waiting for locks.
+With high thread spin lock test, most times are spent spinning on the while loop waiting for locks.
+With high thread mutex test, most times are spent trying to grab locks/releasing locks/putting threads to sleep/waking threads up.
+
+Q2.3.2
+Most cycles are consumed inside the thread function (the while loop that the spin lock spins on)
+The operation becomes more and more expensive when the number of threads increases,
+because there are more threads to spin on.
+More specifically, when OS switches thread, there is a higher probability of hitting the thread with the lock.
+With more threads, the probability of hitting the thread with the lock decreases,
+and whenever this happens, we spin, wasting cycles.
+
+Q2.3.3
+The average lock-wait-time rise drastically with thread numbers because there are more threads waiting at the same time.
+All of those extra threads adds the wait time to the cumulative total wait time.
+More specifically, if we originally have n threads, and if we add 1 more thread to make it n+1 threads,
+total accumulated wait time += sum of (run time (previous n threads)),
+so average run time increases exponentially.
+Completition time per operation increases less drastically because
+completion time is calculated by total run time/number of operations.
+Unlike total accumulated wait time, which counts in all the time individual threads are waiting
+(where an added thread can contribute a lot),
+total run time doesn't care if there is 1 thread waiting or 100 threads waiting.
+When number of threads increase, total time only increase by the amount of time that the added thread is actually working,
+and the extra overhead of grabing/releasing threads.
+This is why wait time per operation go up faster than the completion time per operation.
+
+Q2.3.4
+When number of lists increase, throughput increases.
+There is a limit of throughput.
+Imagine the number of lists as hash buckets, there is a point when there are more buckets than elements.
+At that time, adding more bucket (lists) has no more benefit.
+It's not reasonable to suggest that the throughput of 1 long list with 1/N is equivalent to the throughput of N sublists.
+Traverse time of a single super long list is much higher than the traverse time of short buckets.
+Throughput of separated sublists is improved by the hash algorithm.

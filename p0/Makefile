@@ -1,0 +1,56 @@
+lab0: lab0.c
+	gcc -Wall -Wextra -g -O0 lab0.c -o lab0
+
+.PHONY: check clean dist
+
+check: lab0
+	-@echo ""
+	-@echo "Starting smoke-test..."
+	-@echo ""
+	-@echo "Testing with stdin, input is 'abc'"
+	-echo 'abc' | ./lab0
+	-@echo ""
+	-@echo "Testing with an input file with content 'abc'"
+	-echo 'abc' > testin.txt
+	-./lab0 --input testin.txt
+	-@echo ""
+	-@echo "Testing with an output file with input 'abc'"
+	-echo 'abc' | ./lab0 --output testout.txt
+	-cat testout.txt
+	-@echo ""
+	-@echo "Testing with input file and output file with content 'abc'"
+	-echo 'abc' > testin.txt
+	-./lab0 --input testin.txt --output testout.txt
+	-cat testout.txt
+	-@echo ""
+	-@echo "Testing with a non-existance input file"
+	-./lab0 --input no.txt
+	-@echo ""
+	-@echo "Testing with an unreadable input file"
+	-touch notreadable.txt
+	-chmod -r notreadable.txt
+	-./lab0 --input notreadable.txt
+	-@echo ""
+	-@echo "Testing with input file in another directory with content 'abc'"
+	-mkdir test
+	-echo 'abc' > test/testin.txt
+	-./lab0 --input test/testin.txt
+	-@echo ""
+	-@echo "Testing --segfault"
+	-./lab0 --segfault
+	-@echo ""
+	-@echo "Testing --segfault with --catch"
+	-./lab0 --segfault --catch
+	-@echo ""
+	-@rm -rf test
+	-@rm testin.txt
+	-@rm testout.txt
+	-@rm notreadable.txt
+	-@echo "Test ended."
+
+dist: lab0
+	@tar -zcvf lab0-205171726.tar.gz lab0.c Makefile backtrace.png breakpoint.png README
+
+clean:
+	@rm -f lab0
+	@rm -f lab0-205171726.tar.gz

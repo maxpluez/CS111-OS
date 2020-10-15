@@ -1,0 +1,75 @@
+NAME: Max Zhang
+EMAIL: pipi-max@hotmail.com
+ID: 205171726
+
+Included files:
+- 3 c programs and 1 header file, specified by the spec
+- Makefile, which includes the 5 specified phony options as well as multiple other random test cases
+- 2 csv and 9 png required by the spec
+- This README
+
+Features:
+Implemented with all features specified by the spec.
+
+Research:
+TA PPT and man pages
+
+Testing methodology:
+- Tested with the required 200 test cases
+- Tested with the sanity check package
+- Tested with unknown options and missing arguments
+
+Answers:
+Q2.1.1
+Error is seen only when a race condition occur, in which the "add" operation is interrupted.
+In the machine code, this "add" operation is basically 3 operations: "load", "add", "store".
+They are only the three lines of codes in thousands of codes of the whole program,
+so the probability of interrupting in between those 3 lines of machine code is already small.
+Only when we do more operations can we raise the probability of race condition happening.
+And because of this small probability, it seldom happens if only a few of such operations are done.
+
+Q2.1.2
+--yields run so much slower because of all the overheads of context switches.
+The additional time is going to switching threads.
+We can get a more accurate time by getting 2 times each yield:
+1. right before yield
+2. At the moment we enter another thread (context switch is done)
+With yield enabled, most context switch will switch into another thread right after the line yield,
+because that thread previously yielded up to that line,
+so getting a time right after the "yield" line can be a good prediction of where most of the context switch will switch into.
+However, it is not possible to eliminate all overheads as:
+1. gettime() and addition themselves have overheads
+2. Not all context switch will switch into a thread by the line right after the "yield" line. CPU may generate clock intterupts
+that will stop the program at random points.
+
+Q2.1.3
+The overheads of locks and creating/switching thread are averaged out with more iterations.
+Also, temporal locality is exploited more if there are more iterations.
+The function of cost per iterations to number of iterations should be constant (horizontal) if stable.
+
+Q2.1.4
+Protection mechanism create overhead when we set/release locks.
+When there are a few threads, there are only a few times when we need to set/release locks.
+But when there are a lot of threads, each of the threads set/release the lock
+whenever that thread enters the critical section, increasing the total overhead.
+
+Q2.2.1
+For lab2_add with mutex lock, the cost per operation increases first and then stay at a constant.
+For lab2_list with mutex lock, the cost per operation is almost constant regardless of how many threads there are.
+As explained in Q2.1.3, when number of threads increase, the number of operations increase. Overheads averages out.
+So cost of each operation becomes more and more stable and constant.
+
+Comparing to adding, the operations on linked lists themselves are much more complicated and take longer than simple additions.
+The overheads seem less significant comparing to the heavy linked list methods.
+So the overheads of threads already have little effects on cost per operation, making the graph looks more horizontal.
+Also, since for lab2_list, mutex lock is applied on the whole process of inserting, looking up, and deleting,
+we basically ensure that one thread finishes all of its job before another thread can enter.
+Thus, there are less random thread switching even with more threads.
+Therefore, the graph for list is more horizontal than the graph of simple add.
+
+Q2.2.2
+Graphs for spin locks are mostly above graphs of mutex and have steeper slopes.
+The graphs for spin locks also tend to be increasing linearly instead of trending towards a constant like mutex.
+This is mainly because the "spinning" on a lock itself is a waste of time, creating huge overheads.
+The more threads we have, the more "spinning" we do, the most costs there are.
+

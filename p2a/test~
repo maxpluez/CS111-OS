@@ -1,0 +1,2 @@
+#!/bin/sh
+./lab2_add --threads=10 --iterations=100

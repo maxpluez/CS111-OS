@@ -1,0 +1,15 @@
+NAME: Max Zhang
+EMAIL: pipi-max@hotmail.com
+ID: 205171726
+
+The tar includes the following files:
+lab0.c which is the C program,
+Makefile which is the Makefile,
+2 .png files that are the screenshots.
+
+Smoke-test cases are presented by 'make check' in the following way:
+Each block represents one test.
+At the start of each test, a line will be printed stating what the test is about.
+From the description, we should be able to tell whether this case is trying to raise an error or succeed.
+Then, code used for the test will be printed, and we can examine the output of those code to see if they are expected.
+If failed, make will log the error produced by the C program and then proceed.

@@ -1,0 +1,2 @@
+... waitpid returns -1, status=0
+././lab1a EXIT SIGNAL=0, STATUS=0

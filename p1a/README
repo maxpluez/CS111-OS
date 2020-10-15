@@ -1,0 +1,29 @@
+NAME: Max Zhang
+EMAIL: pipi-max@hotmail.com
+ID: 205171726
+
+The tarball contains:
+lab1a.c: The C program;
+README: This file;
+Makefile: Including lab1a, clean, dist;
+
+Research:
+Manual pages of syscalls;
+TA PPT;
+
+Feature:
+Without --shell, the program echos what is printed out after a buffer is filled.
+The default buffer size is 1 so it prints on the go.
+Changing local variable buf_size changes the buffer size, obviously.
+
+With the --shell option, the program acts the same as what the spec says (hopefully).
+
+Testing Method:
+1. Test without --shell with buffer size 8 and terminates with ^D;
+2. Test without --shell with buffer size 8 and terminates with ^C;
+3. Test without --shell with buffer size 1;
+4. Test with --shell, all commands have correct syntax, terminate with ^C;
+5. Test with --shell, all commands have correct syntax, terminate with ^D, check that exit status is 0;
+6. Test with --shell, last command has incorrect syntax, terminate with ^C;
+7. Test with --shell, last command has incorrect syntax, terminate with ^D, check that exit status is not 0;
+8. Test with the provided test script;

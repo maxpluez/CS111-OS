@@ -1,0 +1,5 @@
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+maxzh    12853  0.0  0.0 121196  3664 pts/176  Ss   14:44   0:00 -bash
+maxzh    21297  0.0  0.0 113320  1676 pts/176  S+   14:57   0:00 /bin/bash ./testscript 205171726 .
+maxzh    22419  0.0  0.0 159624  2040 pts/176  R+   14:57   0:00 ps -u
+maxzh    41097  0.0  0.0 121196  3672 pts/75   Ss+  12:55   0:00 -bash
